@@ -3,6 +3,9 @@ import pygame
 import colors
 import config
 
+from ship.ship import Ship
+from utils.vec2d import Vec2d
+
 
 class Game(object):
 
@@ -25,7 +28,10 @@ class Game(object):
         self.paused = 0
         self.running = 1
 
-        pass
+        # Game objects
+        initialShipPos = Vec2d((config.screenWidth / 2,
+                                config.screenHeight / 2))
+        self.ship = Ship(self.screen, initialShipPos)
 
     def run(self):
 
@@ -64,6 +70,9 @@ class Game(object):
                 elif event.key == pygame.K_p:
                     self.paused = not self.paused
 
+        # Send keyboard input to ship
+        self.ship.getKeyboardInput(pygame.key.get_pressed())
+
     def update(self, timePassed):
         """
         Updates all relevant game objects with timePassed.
@@ -71,13 +80,18 @@ class Game(object):
         Args:
             timePassed: Time between last and current frame.
         """
-        pass
+
+        # Update ship
+        self.ship.update(timePassed)
 
     def draw(self):
         """
         Draws all relevant game objects to the screen.
         """
         self.screen.fill(colors.black)
+
+        # Draw ship
+        self.ship.blitMe()
 
         # Actually draw all objects to the screen.
         pygame.display.flip()
