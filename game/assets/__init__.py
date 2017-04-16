@@ -5,5 +5,7 @@ Contains all image objects for the game.
 import pygame
 
 # Ship assets
-shipImage = pygame.image.load('ship/ship.png')
-transparentShipImage = pygame.image.load('ship/transparentShip.png')
+shipImageDir = 'game/assets/ship/ship.png'
+transparentShipImageDir = 'game/assets/ship/transparentShip.png'
+shipImage = pygame.image.load(shipImageDir)
+transparentShipImage = pygame.image.load(transparentShipImageDir)
