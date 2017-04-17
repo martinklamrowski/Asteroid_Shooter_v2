@@ -22,6 +22,6 @@ keyToTranslationVector = {
 
 shipRotationSpeed = 0.3
 keyToRotationAngle = {
-    pygame.K_a: shipRotationSpeed,  # Counterclockwise
-    pygame.K_d: -shipRotationSpeed  # Clockwise
+    pygame.K_a: -shipRotationSpeed,  # Counterclockwise
+    pygame.K_d: shipRotationSpeed  # Clockwise
 }

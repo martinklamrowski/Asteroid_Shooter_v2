@@ -31,7 +31,7 @@ class Ship(Sprite):
         self.image = shipImage
         self.rect = None
         self.pos = position
-        self.direction = Vec2d((0, 1))  # Initially point ship upwards.
+        self.direction = Vec2d((1, 0))  # Initially point ship right.
         self.keyboardInput = None
 
         # Because the ship image rotates, we need to keep the original
@@ -64,7 +64,7 @@ class Ship(Sprite):
 
     def updateImage(self):
         self.currentImage = pygame.transform.rotate(
-            self.image, self.direction.angle)
+            self.image, -self.direction.angle)
 
     def updateRect(self):
         imageWidth, imageHeight = self.currentImage.get_size()
