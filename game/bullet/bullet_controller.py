@@ -48,6 +48,14 @@ class BulletController(object):
                                        shipDirection))
             self.timeSinceLastBullet = 0
 
+    def maintainBullets(self):
+        """
+        Delete bullets that are outside the screen area.
+        """
+        for bullet in self.bullets:
+            if not bullet.inBounds():
+                self.bullets.remove(bullet)
+
     def updateController(self, timePassed):
         self.timeSinceLastBullet += timePassed
 
@@ -63,6 +71,8 @@ class BulletController(object):
 
         for bullet in self.bullets:
             bullet.update(timePassed)
+
+        self.maintainBullets()  # Delete bullets off screen.
 
     def blitBullets(self):
         """

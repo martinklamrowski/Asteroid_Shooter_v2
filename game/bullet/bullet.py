@@ -32,6 +32,15 @@ class Bullet(Sprite):
         distanceTravelled = timePassed * self.bulletSpeed
         self.pos += self.direction * distanceTravelled
 
+    def inBounds(self):
+        screenWidth, screenHeight = self.screen.get_size()
+
+        if self.pos.x < 0 or self.pos.x > screenWidth:
+            return False
+        if self.pos.y < 0 or self.pos.y > screenHeight:
+            return False
+        return True
+
     def updateRect(self):
         imageWidth, imageHeight = self.image.get_size()
 
