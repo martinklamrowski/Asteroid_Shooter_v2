@@ -12,3 +12,8 @@ transparentShipImage = pygame.image.load(transparentShipImageDir)
 
 bulletImageDir = 'game/assets/ship/bullet.png'
 bulletImage = pygame.image.load(bulletImageDir)
+
+
+# Asteroid assets
+asteroidImageDir = 'game/assets/asteroid/asteroid.png'
+asteroidImage = pygame.image.load(asteroidImageDir)

@@ -31,3 +31,7 @@ timeBetweenBullets = 150
 
 # Bullet config
 bulletTranslationSpeed = 0.4
+
+
+# Asteroid config
+asteroidTranslationSpeed = 0.2
