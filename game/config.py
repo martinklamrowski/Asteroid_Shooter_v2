@@ -25,3 +25,9 @@ keyToRotationAngle = {
     pygame.K_a: -shipRotationSpeed,  # Counterclockwise
     pygame.K_d: shipRotationSpeed  # Clockwise
 }
+
+# BulletController config
+timeBetweenBullets = 150
+
+# Bullet config
+bulletTranslationSpeed = 0.4

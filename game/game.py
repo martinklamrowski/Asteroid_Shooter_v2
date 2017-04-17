@@ -5,6 +5,7 @@ import config
 
 from ship.ship import Ship
 from utils.vec2d import Vec2d
+from bullet.bullet_controller import BulletController
 
 
 class Game(object):
@@ -32,6 +33,8 @@ class Game(object):
         initialShipPos = Vec2d((config.screenWidth / 2,
                                 config.screenHeight / 2))
         self.ship = Ship(self.screen, initialShipPos)
+        self.shipBulletController = BulletController(self.screen,
+                                                     self.ship)
 
     def run(self):
 
@@ -70,8 +73,10 @@ class Game(object):
                 elif event.key == pygame.K_p:
                     self.paused = not self.paused
 
+        keysPressed = pygame.key.get_pressed()
         # Send keyboard input to ship
-        self.ship.getKeyboardInput(pygame.key.get_pressed())
+        self.ship.getKeyboardInput(keysPressed)
+        self.shipBulletController.getKeyboardInput(keysPressed)
 
     def update(self, timePassed):
         """
@@ -81,8 +86,9 @@ class Game(object):
             timePassed: Time between last and current frame.
         """
 
-        # Update ship
+        # Update ship and it's bullet controller.
         self.ship.update(timePassed)
+        self.shipBulletController.update(timePassed)
 
     def draw(self):
         """
@@ -90,8 +96,9 @@ class Game(object):
         """
         self.screen.fill(colors.black)
 
-        # Draw ship
+        # Draw ship and bullets from it's bullet controller.
         self.ship.blitMe()
+        self.shipBulletController.blitBullets()
 
         # Actually draw all objects to the screen.
         pygame.display.flip()
