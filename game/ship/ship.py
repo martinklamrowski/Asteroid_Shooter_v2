@@ -45,6 +45,18 @@ class Ship(Sprite):
         """
         self.keyboardInput = keysPressed
 
+    def keepInBounds(self):
+        """
+        Keep ship in bounds of the screen.
+        """
+        screenWidth, screenHeight = self.screen.get_size()
+
+        self.pos.x = max(0, self.pos.x)
+        self.pos.x = min(screenWidth, self.pos.x)
+
+        self.pos.y = max(0, self.pos.y)
+        self.pos.y = min(screenHeight, self.pos.y)
+
     def update(self, timePassed):
         """
         Update ship position and direction based on keyboard input.
@@ -58,6 +70,9 @@ class Ship(Sprite):
         for key, rotationAngle in keyToRotationAngle.items():
             if self.keyboardInput[key]:
                 self.direction.rotate(rotationAngle * timePassed)
+
+        # Keep ship in bounds of screen.
+        self.keepInBounds()
 
         # Update new ship image after rotating.
         self.updateImage()
