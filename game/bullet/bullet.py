@@ -28,6 +28,9 @@ class Bullet(Sprite):
         self.direction = direction
         self.bulletSpeed = bulletTranslationSpeed
 
+        # Set initial bounding box.
+        self.updateRect()
+
     def update(self, timePassed):
         distanceTravelled = timePassed * self.bulletSpeed
         self.pos += self.direction * distanceTravelled
