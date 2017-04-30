@@ -3,8 +3,12 @@ import pygame
 import colors
 import config
 
+from asteroid.asteroid_controller import AsteroidController
+from events.eventSpawner import EventSpawner
+
 from ship.ship import Ship
 from utils.vec2d import Vec2d
+from utils.collisions import doCollide
 from bullet.bullet_controller import BulletController
 
 
@@ -35,6 +39,11 @@ class Game(object):
         self.ship = Ship(self.screen, initialShipPos)
         self.shipBulletController = BulletController(self.screen,
                                                      self.ship)
+
+        self.asteroidController = AsteroidController(self.screen)
+
+        # Event spawner
+        self.eventSpawner = EventSpawner(self.asteroidController)
 
     def run(self):
 
@@ -90,6 +99,18 @@ class Game(object):
         self.ship.update(timePassed)
         self.shipBulletController.update(timePassed)
 
+        # Update asteroids, through their controller.
+        self.asteroidController.updateAsteroids(timePassed)
+
+        # Handle collisions.
+        self.handleCollisions()
+
+        # Spawn new events
+        self.eventSpawner.spawnRandomEvent()
+
+        # Maintain game objects.
+        self.maintainGameObjects()
+
     def draw(self):
         """
         Draws all relevant game objects to the screen.
@@ -100,5 +121,28 @@ class Game(object):
         self.ship.blitMe()
         self.shipBulletController.blitBullets()
 
+        # Draw asteroids.
+        self.asteroidController.blitAsteroids()
+
         # Actually draw all objects to the screen.
         pygame.display.flip()
+
+    def maintainGameObjects(self):
+        # Maintain bullets.
+        self.shipBulletController.maintainBullets()
+
+        # Maintain asteroids.
+        self.asteroidController.maintainAsteroids()
+
+    def handleCollisions(self):
+
+        # Between bullet and asteroids.
+        for bullet in self.shipBulletController.bullets:
+            for asteroid in self.asteroidController.asteroids:
+                if doCollide(bullet, asteroid):
+
+                    # Remove bullet and asteroid, and move on to next bullet.
+                    self.shipBulletController.bullets.remove(bullet)
+                    self.asteroidController.asteroids.remove(asteroid)
+
+                    break
