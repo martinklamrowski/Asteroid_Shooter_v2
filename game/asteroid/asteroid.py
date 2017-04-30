@@ -18,6 +18,7 @@ class Asteroid(Sprite):
         direction (Vec2d): Direction of the asteroid.
         asteroidSpeed (float): Asteroid speed.
     """
+
     def __init__(self, screen):
 
         Sprite.__init__(self)
@@ -33,6 +34,13 @@ class Asteroid(Sprite):
         # Generate starting position and direction vectors.
         self.generatePosition()
         self.generateDirection()
+
+        # Set initial bounding box.
+        self.updateRect()
+
+        # Use time alive to know if asteroid is active or not.
+        # Cannot only rely if asteroid is on screen.
+        self.timeAlive = 0.0
 
     def generatePosition(self):
         """
@@ -65,14 +73,19 @@ class Asteroid(Sprite):
         self.direction = Vec2d((1, 0))
         self.direction.rotate(angleToRandomPoint)
 
-    def inBound(self):
-        raise NotImplementedError
+    def inBounds(self):
+        screenWidth, screenHeight = self.screen.get_size()
+
+        return 0 <= self.pos.x and self.pos.x < screenWidth and \
+            0 <= self.pos.y and self.pos.y < screenHeight
 
     def isActive(self):
-        raise NotImplementedError
+        return self.inBounds() or self.timeAlive < 1000.0
 
     def update(self, timePassed):
         self.pos += self.direction * timePassed * self.asteroidSpeed
+
+        self.timeAlive += timePassed
 
     def updateRect(self):
         imageWidth, imageHeight = self.image.get_size()

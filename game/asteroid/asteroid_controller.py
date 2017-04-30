@@ -19,7 +19,9 @@ class AsteroidController(object):
         self.asteroids.append(Asteroid(self.screen))
 
     def maintainAsteroids(self):
-        raise NotImplementedError
+        for asteroid in self.asteroids:
+            if not asteroid.isActive():
+                self.asteroids.remove(asteroid)
 
     def updateAsteroids(self, timePassed):
         for asteroid in self.asteroids:
