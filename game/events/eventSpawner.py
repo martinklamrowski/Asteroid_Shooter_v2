@@ -7,8 +7,9 @@ class EventSpawner(object):
 
         self.asteroidController = asteroidController
 
-        self.events = {self.spawnBasicAsteroid: 100,
-                       self.noEvent: 1000}
+        self.events = {self.asteroidController.spawnBasicAsteroid: 100,
+                       self.asteroidController.spawnHomingAsteroid: 20,
+                       self.noEvent: 2000}
 
     def spawnRandomEvent(self):
         event = self.getRandomEvent()
@@ -26,9 +27,6 @@ class EventSpawner(object):
                 randomChance -= eventChance
 
         raise Exception('Not suppossed to reach here.')
-
-    def spawnBasicAsteroid(self):
-        self.asteroidController.spawnBasicAsteroid()
 
     def noEvent(self):
         pass

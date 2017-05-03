@@ -17,3 +17,6 @@ bulletImage = pygame.image.load(bulletImageDir)
 # Asteroid assets
 asteroidImageDir = 'game/assets/asteroid/asteroid.png'
 asteroidImage = pygame.image.load(asteroidImageDir)
+
+homingAsteroidImageDir = 'game/assets/asteroid/homing_asteroid.png'
+homingAsteroidImage = pygame.image.load(homingAsteroidImageDir)

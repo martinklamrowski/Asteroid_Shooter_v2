@@ -35,3 +35,7 @@ bulletTranslationSpeed = 0.4
 
 # Asteroid config
 asteroidTranslationSpeed = 0.2
+
+# Homing asteroid config
+homingAsteroidTranslationSpeed = 0.15
+homingAsteroidRotationSpeed = 4.0

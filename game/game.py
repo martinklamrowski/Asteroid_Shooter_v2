@@ -40,7 +40,7 @@ class Game(object):
         self.shipBulletController = BulletController(self.screen,
                                                      self.ship)
 
-        self.asteroidController = AsteroidController(self.screen)
+        self.asteroidController = AsteroidController(self.screen, self.ship)
 
         # Event spawner
         self.eventSpawner = EventSpawner(self.asteroidController)
