@@ -28,6 +28,9 @@ keyToRotationAngle = {
 
 # BulletController config
 timeBetweenBullets = 150
+bulletLimit = 15
+timeCooldownStart = 700
+timeBetweenBulletCooldowns = 100
 
 # Bullet config
 bulletTranslationSpeed = 0.4

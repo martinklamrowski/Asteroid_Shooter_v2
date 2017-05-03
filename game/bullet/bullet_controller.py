@@ -1,7 +1,8 @@
 import pygame
 import copy
 
-from ..config import timeBetweenBullets
+from ..config import timeBetweenBullets, bulletLimit
+from ..config import timeCooldownStart, timeBetweenBulletCooldowns
 from bullet import Bullet
 
 
@@ -31,18 +32,28 @@ class BulletController(object):
         self.timeSinceLastBullet = 0
         self.keyboardInput = None
 
+        self.bulletCount = 0
+        self.bulletLimit = bulletLimit
+
+        self.timeCooldownStart = timeCooldownStart
+        self.timeBetweenBulletCooldowns = timeBetweenBulletCooldowns
+
     def getKeyboardInput(self, keysPressed):
         self.keyboardInput = keysPressed
 
     def canShoot(self):
-        return self.timeSinceLastBullet >= self.timeBetweenBullets
+        return self.bulletCount < self.bulletLimit and \
+            self.timeSinceLastBullet > self.timeBetweenBullets
 
     def shoot(self):
         if self.canShoot():
+            self.bulletCount += 1
+
             # Copy ship position and direciton.
             shipPosition = copy.copy(self.ship.pos)
             shipDirection = copy.copy(self.ship.direction)
 
+            # Spawn new bullet with current ship position and direction.
             self.bullets.append(Bullet(self.screen,
                                        shipPosition,
                                        shipDirection))
@@ -56,6 +67,16 @@ class BulletController(object):
             if not bullet.inBounds():
                 self.bullets.remove(bullet)
 
+    def updateBulletCooldown(self):
+
+        # Check if cooldown has started.
+        if self.timeSinceLastBullet > self.timeCooldownStart:
+
+            # Check if we can remove bullet.
+            if self.bulletCount > 0:
+                self.bulletCount -= 1
+                self.timeSinceLastBullet -= self.timeBetweenBulletCooldowns
+
     def updateController(self, timePassed):
         self.timeSinceLastBullet += timePassed
 
@@ -68,6 +89,7 @@ class BulletController(object):
         Update bullet controller and all of it's bullets.
         """
         self.updateController(timePassed)
+        self.updateBulletCooldown()
 
         for bullet in self.bullets:
             bullet.update(timePassed)
