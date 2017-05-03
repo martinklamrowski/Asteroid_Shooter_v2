@@ -136,13 +136,21 @@ class Game(object):
 
     def handleCollisions(self):
 
+        # Between ship and asteroids.
+        for asteroid in self.asteroidController.asteroids:
+            if doCollide(self.ship, asteroid):
+                self.initializeGameOverSequence()
+                return
+
         # Between bullet and asteroids.
         for bullet in self.shipBulletController.bullets:
             for asteroid in self.asteroidController.asteroids:
                 if doCollide(bullet, asteroid):
-
                     # Remove bullet and asteroid, and move on to next bullet.
                     self.shipBulletController.bullets.remove(bullet)
                     self.asteroidController.asteroids.remove(asteroid)
 
                     break
+
+    def initializeGameOverSequence(self):
+        self.running = 0
