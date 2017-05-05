@@ -12,6 +12,7 @@ screenHeight = 700
 framerate = 60
 
 # Ship config
+shipHealth = 3
 shipTranslationSpeed = 0.2
 keyToTranslationVector = {
     pygame.K_j: Vec2d((-shipTranslationSpeed, 0)),  # Left
@@ -42,3 +43,6 @@ asteroidTranslationSpeed = 0.2
 # Homing asteroid config
 homingAsteroidTranslationSpeed = 0.15
 homingAsteroidRotationSpeed = 4.0
+
+# Health bar config
+healthBarMargin = 5

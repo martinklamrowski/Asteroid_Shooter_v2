@@ -1,4 +1,5 @@
 from bullet_guage import BulletGuage
+from health_bar import HealthBar
 
 
 class VisualsController(object):
@@ -31,6 +32,9 @@ class VisualsController(object):
 
         # Add bullet guage visual.
         self.visuals.append(BulletGuage(self.screen, self.bulletController))
+
+        # Add health bar visual.
+        self.visuals.append(HealthBar(self.screen, self.ship))
 
     def blitMe(self):
         for visual in self.visuals:

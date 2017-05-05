@@ -7,12 +7,15 @@ import pygame
 # Ship assets
 shipImageDir = 'game/assets/ship/ship.png'
 transparentShipImageDir = 'game/assets/ship/transparentShip.png'
+
 shipImage = pygame.image.load(shipImageDir)
 transparentShipImage = pygame.image.load(transparentShipImageDir)
 
 bulletImageDir = 'game/assets/ship/bullet.png'
 bulletImage = pygame.image.load(bulletImageDir)
 
+heartImageDir = 'game/assets/ship/heart16.png'
+heartImage = pygame.image.load(heartImageDir)
 
 # Asteroid assets
 asteroidImageDir = 'game/assets/asteroid/asteroid.png'

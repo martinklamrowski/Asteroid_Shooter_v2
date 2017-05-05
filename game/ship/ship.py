@@ -3,7 +3,7 @@ import pygame
 from pygame.sprite import Sprite
 from ..assets import shipImage
 from ..utils.vec2d import Vec2d
-from ..config import keyToTranslationVector, keyToRotationAngle
+from ..config import keyToTranslationVector, keyToRotationAngle, shipHealth
 
 
 class Ship(Sprite):
@@ -18,6 +18,7 @@ class Ship(Sprite):
         image (pygame.Image): Image of the ship.
         rect (pygame.Rect): Bounding box of the ship.
         pos (Vec2d): Current position of the ship.
+        shipHealth (int): Lives ship currently has left.
         diretion (Vec2d): Normalized direction vector of the ship.
         keyboardInput (bools): State of keyboard keys pressed from last frame.
     """
@@ -31,6 +32,7 @@ class Ship(Sprite):
         self.image = shipImage
         self.rect = None
         self.pos = position
+        self.shipHealth = shipHealth
         self.direction = Vec2d((1, 0))  # Initially point ship right.
         self.keyboardInput = None
 
@@ -44,6 +46,19 @@ class Ship(Sprite):
         passed between frames is given.
         """
         self.keyboardInput = keysPressed
+
+    def shipCollided(self):
+        """
+        Decreases the ship's health by one, and returns a bool whether the
+        ship is still alive or not.
+        """
+        self.shipHealth -= 1
+
+        if self.shipHealth > 0:
+            # Do some things
+            return 1
+        else:
+            return 0
 
     def keepInBounds(self):
         """

@@ -149,8 +149,15 @@ class Game(object):
         # Between ship and asteroids.
         for asteroid in self.asteroidController.asteroids:
             if doCollide(self.ship, asteroid):
-                self.initializeGameOverSequence()
-                return
+                # Remove asteroid.
+                self.asteroidController.asteroids.remove(asteroid)
+
+                # Tell ship it has collided with an asteroid.
+                isShipAlive = self.ship.shipCollided()
+
+                if not isShipAlive:
+                    self.initializeGameOverSequence()
+                    return
 
         # Between bullet and asteroids.
         for bullet in self.shipBulletController.bullets:
