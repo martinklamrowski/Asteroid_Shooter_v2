@@ -10,6 +10,7 @@ from ship.ship import Ship
 from utils.vec2d import Vec2d
 from utils.collisions import doCollide
 from bullet.bullet_controller import BulletController
+from visuals.screen_visuals import VisualsController
 
 
 class Game(object):
@@ -44,6 +45,12 @@ class Game(object):
 
         # Event spawner
         self.eventSpawner = EventSpawner(self.asteroidController)
+
+        # Screen visuals
+        self.visualsController = VisualsController(self.screen,
+                                                   self.asteroidController,
+                                                   self.shipBulletController,
+                                                   self.ship)
 
     def run(self):
 
@@ -123,6 +130,9 @@ class Game(object):
 
         # Draw asteroids.
         self.asteroidController.blitAsteroids()
+
+        # Draw screen visuals.
+        self.visualsController.blitMe()
 
         # Actually draw all objects to the screen.
         pygame.display.flip()
