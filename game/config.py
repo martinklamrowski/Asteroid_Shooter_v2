@@ -27,6 +27,8 @@ keyToRotationAngle = {
     pygame.K_d: shipRotationSpeed  # Clockwise
 }
 
+invincibilityDuration = 3000.0
+
 # BulletController config
 timeBetweenBullets = 150
 bulletLimit = 15
