@@ -21,6 +21,7 @@ class BulletController(object):
         timeBetweenBullets (float): Minimum time between successive bullets.
         timeSinceLastBullet (float): Time since last bullet shot.
         keyboardInput (bools): State of keyboard keys pressed from last frame.
+        bulletSpamCount (int): Number of bullet spam powerups currently active.
     """
     def __init__(self, screen, ship):
 
@@ -31,6 +32,7 @@ class BulletController(object):
         self.timeBetweenBullets = timeBetweenBullets
         self.timeSinceLastBullet = 0
         self.keyboardInput = None
+        self.bulletSpamCount = 0
 
         self.bulletCount = 0
         self.bulletLimit = bulletLimit
@@ -42,12 +44,18 @@ class BulletController(object):
         self.keyboardInput = keysPressed
 
     def canShoot(self):
+        # If bullet spam is active just shoot.
+        if self.bulletSpamCount:
+            return True
+
         return self.bulletCount < self.bulletLimit and \
             self.timeSinceLastBullet > self.timeBetweenBullets
 
     def shoot(self):
         if self.canShoot():
-            self.bulletCount += 1
+
+            if not self.bulletSpamCount:
+                self.bulletCount += 1
 
             # Copy ship position and direciton.
             shipPosition = copy.copy(self.ship.pos)
@@ -58,6 +66,12 @@ class BulletController(object):
                                        shipPosition,
                                        shipDirection))
             self.timeSinceLastBullet = 0
+
+    def activateBulletSpam(self):
+        self.bulletSpamCount += 1
+
+    def deactivateBulletSpam(self):
+        self.bulletSpamCount -= 1
 
     def maintainBullets(self):
         """

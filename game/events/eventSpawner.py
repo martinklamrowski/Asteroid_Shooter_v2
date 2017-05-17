@@ -3,12 +3,14 @@ import random
 
 class EventSpawner(object):
 
-    def __init__(self, asteroidController):
+    def __init__(self, asteroidController, powerupController):
 
         self.asteroidController = asteroidController
+        self.powerupController = powerupController
 
         self.events = {self.asteroidController.spawnBasicAsteroid: 100,
                        self.asteroidController.spawnHomingAsteroid: 20,
+                       self.powerupController.spawnRandomPowerup: 1,
                        self.noEvent: 2000}
 
     def spawnRandomEvent(self):

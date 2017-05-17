@@ -11,6 +11,7 @@ from utils.vec2d import Vec2d
 from utils.collisions import doCollide
 from bullet.bullet_controller import BulletController
 from visuals.screen_visuals import VisualsController
+from powerups.powerup_controller import PowerupController
 
 
 class Game(object):
@@ -43,8 +44,13 @@ class Game(object):
 
         self.asteroidController = AsteroidController(self.screen, self.ship)
 
+        # Powerup controller
+        self.powerupController = PowerupController(self.screen, self.ship,
+                                                   self.shipBulletController)
+
         # Event spawner
-        self.eventSpawner = EventSpawner(self.asteroidController)
+        self.eventSpawner = EventSpawner(self.asteroidController,
+                                         self.powerupController)
 
         # Screen visuals
         self.visualsController = VisualsController(self.screen,
@@ -109,6 +115,9 @@ class Game(object):
         # Update asteroids, through their controller.
         self.asteroidController.updateAsteroids(timePassed)
 
+        # Update powerups.
+        self.powerupController.updatePowerups(timePassed)
+
         # Handle collisions.
         self.handleCollisions()
 
@@ -131,6 +140,9 @@ class Game(object):
         # Draw asteroids.
         self.asteroidController.blitAsteroids()
 
+        # Draw powerups.
+        self.powerupController.drawPowerups()
+
         # Draw screen visuals.
         self.visualsController.blitMe()
 
@@ -143,6 +155,9 @@ class Game(object):
 
         # Maintain asteroids.
         self.asteroidController.maintainAsteroids()
+
+        # Maintain powerups.
+        self.powerupController.maintainPowerups()
 
     def handleCollisions(self):
 
@@ -169,6 +184,9 @@ class Game(object):
                     self.asteroidController.asteroids.remove(asteroid)
 
                     break
+
+        # Between ship and powerups.
+        self.powerupController.handleCollisionsWithShip()
 
     def initializeGameOverSequence(self):
         self.running = 0

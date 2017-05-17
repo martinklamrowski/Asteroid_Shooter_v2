@@ -48,3 +48,7 @@ homingAsteroidRotationSpeed = 4.0
 
 # Health bar config
 healthBarMargin = 5
+
+# Bullet spam powerup config
+bulletSpamTimeAlive = 5000.0
+bulletSpamTimeActive = 5000.0
