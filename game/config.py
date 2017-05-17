@@ -52,3 +52,4 @@ healthBarMargin = 5
 # Bullet spam powerup config
 bulletSpamTimeAlive = 5000.0
 bulletSpamTimeActive = 5000.0
+timeBetweenBulletSpamBullets = 50.0

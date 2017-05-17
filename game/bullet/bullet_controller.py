@@ -3,6 +3,7 @@ import copy
 
 from ..config import timeBetweenBullets, bulletLimit
 from ..config import timeCooldownStart, timeBetweenBulletCooldowns
+from ..config import timeBetweenBulletSpamBullets
 from bullet import Bullet
 
 
@@ -40,13 +41,15 @@ class BulletController(object):
         self.timeCooldownStart = timeCooldownStart
         self.timeBetweenBulletCooldowns = timeBetweenBulletCooldowns
 
+        self.timeBetweenBulletSpamBullets = timeBetweenBulletSpamBullets
+
     def getKeyboardInput(self, keysPressed):
         self.keyboardInput = keysPressed
 
     def canShoot(self):
         # If bullet spam is active just shoot.
         if self.bulletSpamCount:
-            return True
+            return self.timeSinceLastBullet > self.timeBetweenBulletSpamBullets
 
         return self.bulletCount < self.bulletLimit and \
             self.timeSinceLastBullet > self.timeBetweenBullets
