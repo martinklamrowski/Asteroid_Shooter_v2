@@ -10,7 +10,7 @@ class EventSpawner(object):
 
         self.events = {self.asteroidController.spawnBasicAsteroid: 100,
                        self.asteroidController.spawnHomingAsteroid: 20,
-                       self.powerupController.spawnRandomPowerup: 1,
+                       self.powerupController.spawnRandomPowerup: 20,
                        self.noEvent: 2000}
 
     def spawnRandomEvent(self):

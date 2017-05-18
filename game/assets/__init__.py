@@ -27,3 +27,6 @@ homingAsteroidImage = pygame.image.load(homingAsteroidImageDir)
 # Powerup assets
 bulletSpamImageDir = 'game/assets/powerups/bolt16.png'
 bulletSpamImage = pygame.image.load(bulletSpamImageDir)
+
+wideBulletImageDir = 'game/assets/powerups/wide20.png'
+wideBulletImage = pygame.image.load(wideBulletImageDir)

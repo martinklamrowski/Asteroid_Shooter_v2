@@ -1,6 +1,7 @@
 from ..utils.collisions import doCollide
 from ..utils.vec2d import Vec2d
 from bulletspam import BulletSpamPowerup
+from wide_bullet import WideBulletPowerup
 import random
 
 
@@ -38,9 +39,16 @@ class PowerupController(object):
         self.powerups.append(BulletSpamPowerup(self.screen, powerupPos,
                                                self.bulletController))
 
+    def spawnWideBulletPowerup(self):
+        powerupPos = self.getRandomPositionOnScreen()
+
+        self.powerups.append(WideBulletPowerup(self.screen, powerupPos,
+                                               self.bulletController))
+
     def spawnRandomPowerup(self):
 
-        availablePowerups = [self.spawnBulletSpamPowerup]
+        availablePowerups = [self.spawnBulletSpamPowerup,
+                             self.spawnWideBulletPowerup]
 
         randomPowerup = random.choice(availablePowerups)
 

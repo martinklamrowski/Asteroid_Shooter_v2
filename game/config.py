@@ -53,3 +53,7 @@ healthBarMargin = 5
 bulletSpamTimeAlive = 5000.0
 bulletSpamTimeActive = 5000.0
 timeBetweenBulletSpamBullets = 50.0
+
+# Wide bullet powerup config
+wideBulletTimeAlive = 5000.0
+wideBulletTimeActive = 5000.0

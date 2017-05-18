@@ -34,6 +34,7 @@ class BulletController(object):
         self.timeSinceLastBullet = 0
         self.keyboardInput = None
         self.bulletSpamCount = 0
+        self.wideBulletCount = 0
 
         self.bulletCount = 0
         self.bulletLimit = bulletLimit
@@ -60,14 +61,33 @@ class BulletController(object):
             if not self.bulletSpamCount:
                 self.bulletCount += 1
 
-            # Copy ship position and direciton.
-            shipPosition = copy.copy(self.ship.pos)
-            shipDirection = copy.copy(self.ship.direction)
+            if not self.wideBulletCount:
+                self.spawnBullet()
+            else:
+                self.spawnWideBullet()
 
-            # Spawn new bullet with current ship position and direction.
+    def spawnBullet(self):
+        # Copy ship position and direciton.
+        shipPosition = copy.copy(self.ship.pos)
+        shipDirection = copy.copy(self.ship.direction)
+
+        # Spawn new bullet with current ship position and direction.
+        self.bullets.append(Bullet(self.screen,
+                                   shipPosition,
+                                   shipDirection))
+        self.timeSinceLastBullet = 0
+
+    def spawnWideBullet(self):
+        shipDirection = copy.copy(self.ship.direction)
+
+        for angle in [-15.0, 0.0, 15.0]:
+            shipPosition = copy.copy(self.ship.pos)
+
+            rotatedDirection = shipDirection.rotated(angle).normalized()
+
             self.bullets.append(Bullet(self.screen,
                                        shipPosition,
-                                       shipDirection))
+                                       rotatedDirection))
             self.timeSinceLastBullet = 0
 
     def activateBulletSpam(self):
@@ -75,6 +95,12 @@ class BulletController(object):
 
     def deactivateBulletSpam(self):
         self.bulletSpamCount -= 1
+
+    def activateWideBullet(self):
+        self.wideBulletCount += 1
+
+    def deactivateWideBullet(self):
+        self.wideBulletCount -= 1
 
     def maintainBullets(self):
         """
