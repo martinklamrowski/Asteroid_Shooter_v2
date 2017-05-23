@@ -1,5 +1,6 @@
 from bullet_guage import BulletGuage
 from health_bar import HealthBar
+from texts import Scoreboard, LevelText
 
 
 class VisualsController(object):
@@ -20,13 +21,15 @@ class VisualsController(object):
         visuals (list): List of visual elements the controller owns.
     """
 
-    def __init__(self, screen, asteroidController, bulletController, ship):
+    def __init__(self, screen, asteroidController,
+                 bulletController, ship, stats):
 
         self.screen = screen
 
         self.asteroidController = asteroidController
         self.bulletController = bulletController
         self.ship = ship
+        self.gameStats = stats
 
         self.visuals = []
 
@@ -35,6 +38,12 @@ class VisualsController(object):
 
         # Add health bar visual.
         self.visuals.append(HealthBar(self.screen, self.ship))
+
+        # Add scoreboard.
+        self.visuals.append(Scoreboard(self.screen, self.gameStats))
+
+        # Add level text.
+        self.visuals.append(LevelText(self.screen, self.gameStats))
 
     def blitMe(self):
         for visual in self.visuals:

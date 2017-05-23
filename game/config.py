@@ -57,3 +57,11 @@ timeBetweenBulletSpamBullets = 50.0
 # Wide bullet powerup config
 wideBulletTimeAlive = 5000.0
 wideBulletTimeActive = 5000.0
+
+# ScoreBoard config
+scoreboardMarginFromScreen = 10
+scoreboardHeight = 25
+
+# Level text config
+levelTextHeight = 16
+levelTextMarginFromScreen = 10

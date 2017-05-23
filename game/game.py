@@ -41,6 +41,9 @@ class Game(object):
         # Sound objects
         self.initSounds()
 
+        # Game stats
+        self.stats = {'score': 0, 'level': 1}
+
         # Game objects
         initialShipPos = Vec2d((config.screenWidth / 2,
                                 config.screenHeight / 2))
@@ -56,13 +59,14 @@ class Game(object):
 
         # Event spawner
         self.eventSpawner = EventSpawner(self.asteroidController,
-                                         self.powerupController)
+                                         self.powerupController,
+                                         self.stats)
 
         # Screen visuals
         self.visualsController = VisualsController(self.screen,
                                                    self.asteroidController,
                                                    self.shipBulletController,
-                                                   self.ship)
+                                                   self.ship, self.stats)
 
     def run(self):
 
@@ -127,6 +131,9 @@ class Game(object):
         # Handle collisions.
         self.handleCollisions()
 
+        # Update level.
+        self.updateLevel()
+
         # Spawn new events
         self.eventSpawner.spawnRandomEvent()
 
@@ -187,6 +194,8 @@ class Game(object):
             for asteroid in self.asteroidController.asteroids:
                 if doCollide(bullet, asteroid):
                     # Remove bullet and asteroid, and move on to next bullet.
+                    self.stats['score'] += 1
+
                     self.shipBulletController.bullets.remove(bullet)
                     self.asteroidController.asteroids.remove(asteroid)
 
@@ -200,7 +209,7 @@ class Game(object):
 
     def initSounds(self):
         self.backgroundSound = pygame.mixer.Sound(backgroundSoundDir)
-        self.backgroundSound.set_volume(0.4)
+        self.backgroundSound.set_volume(0.2)
         self.backgroundSound.play(-1)
 
         self.bulletSound = pygame.mixer.Sound(bulletSoundDir)
@@ -208,3 +217,12 @@ class Game(object):
 
         self.shipHitSound = pygame.mixer.Sound(shipHitSoundDir)
         self.shipHitSound.set_volume(0.2)
+
+    def updateLevel(self):
+        currentLevel = self.stats['level']
+        currentScore = self.stats['score']
+
+        currentLevelTarget = 10 * currentLevel * currentLevel
+
+        if currentScore >= currentLevelTarget:
+            self.stats['level'] += 1
