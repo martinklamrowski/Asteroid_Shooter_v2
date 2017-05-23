@@ -24,12 +24,13 @@ class BulletController(object):
         keyboardInput (bools): State of keyboard keys pressed from last frame.
         bulletSpamCount (int): Number of bullet spam powerups currently active.
     """
-    def __init__(self, screen, ship):
+    def __init__(self, screen, ship, bulletSound):
 
         # Bullet controller attributes.
         self.screen = screen
         self.ship = ship
         self.bullets = []
+        self.bulletSound = bulletSound
         self.timeBetweenBullets = timeBetweenBullets
         self.timeSinceLastBullet = 0
         self.keyboardInput = None
@@ -57,6 +58,9 @@ class BulletController(object):
 
     def shoot(self):
         if self.canShoot():
+
+            # Play bullet sound.
+            self.bulletSound.play()
 
             if not self.bulletSpamCount:
                 self.bulletCount += 1

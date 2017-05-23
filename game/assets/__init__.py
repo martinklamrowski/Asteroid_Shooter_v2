@@ -30,3 +30,8 @@ bulletSpamImage = pygame.image.load(bulletSpamImageDir)
 
 wideBulletImageDir = 'game/assets/powerups/wide20.png'
 wideBulletImage = pygame.image.load(wideBulletImageDir)
+
+# Music
+backgroundSoundDir = 'game/assets/music/background.ogg'
+bulletSoundDir = 'game/assets/music/bullet.ogg'
+shipHitSoundDir = 'game/assets/music/hit.ogg'

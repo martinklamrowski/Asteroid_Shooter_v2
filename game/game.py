@@ -6,6 +6,7 @@ import config
 from asteroid.asteroid_controller import AsteroidController
 from events.eventSpawner import EventSpawner
 
+from assets import backgroundSoundDir, bulletSoundDir, shipHitSoundDir
 from ship.ship import Ship
 from utils.vec2d import Vec2d
 from utils.collisions import doCollide
@@ -19,7 +20,9 @@ class Game(object):
     def __init__(self):
 
         # Initialize imported pygame modules.
+        pygame.mixer.pre_init(44100, 16, 2, 4096)
         pygame.init()
+        pygame.mixer.init()
 
         # Initialize screen object.
         # All visual game objects will have a refrence to this
@@ -35,12 +38,15 @@ class Game(object):
         self.paused = 0
         self.running = 1
 
+        # Sound objects
+        self.initSounds()
+
         # Game objects
         initialShipPos = Vec2d((config.screenWidth / 2,
                                 config.screenHeight / 2))
         self.ship = Ship(self.screen, initialShipPos)
-        self.shipBulletController = BulletController(self.screen,
-                                                     self.ship)
+        self.shipBulletController = BulletController(self.screen, self.ship,
+                                                     self.bulletSound)
 
         self.asteroidController = AsteroidController(self.screen, self.ship)
 
@@ -170,10 +176,11 @@ class Game(object):
 
                     # Tell ship it has collided with an asteroid.
                     isShipAlive = self.ship.shipCollided()
-
                     if not isShipAlive:
                         self.initializeGameOverSequence()
                         return
+                    else:
+                        self.shipHitSound.play()
 
         # Between bullet and asteroids.
         for bullet in self.shipBulletController.bullets:
@@ -190,3 +197,14 @@ class Game(object):
 
     def initializeGameOverSequence(self):
         self.running = 0
+
+    def initSounds(self):
+        self.backgroundSound = pygame.mixer.Sound(backgroundSoundDir)
+        self.backgroundSound.set_volume(0.4)
+        self.backgroundSound.play(-1)
+
+        self.bulletSound = pygame.mixer.Sound(bulletSoundDir)
+        self.bulletSound.set_volume(0.1)
+
+        self.shipHitSound = pygame.mixer.Sound(shipHitSoundDir)
+        self.shipHitSound.set_volume(0.2)
