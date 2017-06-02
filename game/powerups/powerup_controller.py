@@ -72,6 +72,9 @@ class PowerupController(object):
             if not powerup.alive:
                 self.powerups.remove(powerup)
 
+    def clearPowerups(self):
+        self.powerups[:] = []
+
     def updatePowerups(self, timePassed):
         for powerup in self.powerups:
             powerup.update(timePassed)

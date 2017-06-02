@@ -29,6 +29,9 @@ class AsteroidController(object):
             if not asteroid.isActive():
                 self.asteroids.remove(asteroid)
 
+    def clearAsteroids(self):
+        self.asteroids[:] = []
+
     def updateAsteroids(self, timePassed):
         for asteroid in self.asteroids:
             asteroid.update(timePassed)

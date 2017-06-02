@@ -31,12 +31,12 @@ class Animation(object):
     def blitMe(self):
         if self.active:
             self.updateRect()
-            self.screen.blit(self.image[self.imageIndex], self.rect)
+            self.screen.blit(self.images[self.imageIndex], self.rect)
 
     def updateRect(self):
         imageWidth, imageHeight = self.images[self.imageIndex].get_size()
 
-        self.rect = self.images[self.image_ptr].get_rect().move(
+        self.rect = self.images[self.imageIndex].get_rect().move(
             self.pos.x - imageWidth / 2,
             self.pos.y - imageHeight / 2)
 

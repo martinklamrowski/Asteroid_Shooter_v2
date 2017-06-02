@@ -13,6 +13,8 @@ from utils.collisions import doCollide
 from bullet.bullet_controller import BulletController
 from visuals.screen_visuals import VisualsController
 from powerups.powerup_controller import PowerupController
+from gameover.ship_explosion import ShipExplosion
+from utils.timer import Timer
 
 
 class Game(object):
@@ -37,6 +39,7 @@ class Game(object):
         # Game states
         self.paused = 0
         self.running = 1
+        self.gameover = 0
 
         # Sound objects
         self.initSounds()
@@ -67,6 +70,9 @@ class Game(object):
                                                    self.asteroidController,
                                                    self.shipBulletController,
                                                    self.ship, self.stats)
+
+        # Ship explosion
+        self.explosion = None  # Will initialize during game over sequence.
 
     def run(self):
 
@@ -119,7 +125,8 @@ class Game(object):
         """
 
         # Update ship and it's bullet controller.
-        self.ship.update(timePassed)
+        if not self.gameover:
+            self.ship.update(timePassed)
         self.shipBulletController.update(timePassed)
 
         # Update asteroids, through their controller.
@@ -135,7 +142,13 @@ class Game(object):
         self.updateLevel()
 
         # Spawn new events
-        self.eventSpawner.spawnRandomEvent()
+        if not self.gameover:
+            self.eventSpawner.spawnRandomEvent()
+
+        # Game over sequence
+        if self.gameover:
+            self.explosion.update(timePassed)
+            self.endGameTimer.update(timePassed)
 
         # Maintain game objects.
         self.maintainGameObjects()
@@ -147,7 +160,8 @@ class Game(object):
         self.screen.fill(colors.black)
 
         # Draw ship and bullets from it's bullet controller.
-        self.ship.blitMe()
+        if not self.gameover:
+            self.ship.blitMe()
         self.shipBulletController.blitBullets()
 
         # Draw asteroids.
@@ -158,6 +172,10 @@ class Game(object):
 
         # Draw screen visuals.
         self.visualsController.blitMe()
+
+        # Game over sequence.
+        if self.gameover:
+            self.explosion.blitMe()
 
         # Actually draw all objects to the screen.
         pygame.display.flip()
@@ -171,6 +189,16 @@ class Game(object):
 
         # Maintain powerups.
         self.powerupController.maintainPowerups()
+
+    def clearGameObjects(self):
+        # Clear bullets.
+        self.shipBulletController.clearBullets()
+
+        # Clear asteroids.
+        self.asteroidController.clearAsteroids()
+
+        # Clear powerups.
+        self.powerupController.clearPowerups()
 
     def handleCollisions(self):
 
@@ -205,7 +233,11 @@ class Game(object):
         self.powerupController.handleCollisionsWithShip()
 
     def initializeGameOverSequence(self):
-        self.running = 0
+        self.gameover = 1
+        self.explosion = ShipExplosion(self.screen, self.ship.pos)
+        self.clearGameObjects()
+        self.stopSounds()
+        self.createEndGameTimer()
 
     def initSounds(self):
         self.backgroundSound = pygame.mixer.Sound(backgroundSoundDir)
@@ -217,6 +249,15 @@ class Game(object):
 
         self.shipHitSound = pygame.mixer.Sound(shipHitSoundDir)
         self.shipHitSound.set_volume(0.2)
+
+    def stopSounds(self):
+        self.backgroundSound.stop()
+
+    def createEndGameTimer(self):
+        self.endGameTimer = Timer(5000.0, self.endGame, callLimit=1)
+
+    def endGame(self):
+        self.running = 0
 
     def updateLevel(self):
         currentLevel = self.stats['level']

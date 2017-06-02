@@ -114,6 +114,9 @@ class BulletController(object):
             if not bullet.inBounds():
                 self.bullets.remove(bullet)
 
+    def clearBullets(self):
+        self.bullets[:] = []
+
     def updateBulletCooldown(self):
 
         # Check if cooldown has started.

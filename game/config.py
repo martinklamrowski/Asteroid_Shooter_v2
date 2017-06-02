@@ -65,3 +65,6 @@ scoreboardHeight = 25
 # Level text config
 levelTextHeight = 16
 levelTextMarginFromScreen = 10
+
+# Ship explosion
+shipExplosionScrollPeriod = 200

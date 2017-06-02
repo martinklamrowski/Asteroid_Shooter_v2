@@ -35,3 +35,8 @@ wideBulletImage = pygame.image.load(wideBulletImageDir)
 backgroundSoundDir = 'game/assets/music/background.ogg'
 bulletSoundDir = 'game/assets/music/bullet.ogg'
 shipHitSoundDir = 'game/assets/music/hit.ogg'
+
+# Ship explosion images
+shipExplosionDirPref = 'game/assets/gameover/explosion'
+shipExplosionDirs = [shipExplosionDirPref + '%i.png' % i for i in range(1, 11)]
+shipExplosionImages = [pygame.image.load(path) for path in shipExplosionDirs]
