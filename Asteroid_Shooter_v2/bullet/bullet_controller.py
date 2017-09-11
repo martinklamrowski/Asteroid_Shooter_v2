@@ -54,7 +54,8 @@ class BulletController(object):
             return self.timeSinceLastBullet > self.timeBetweenBulletSpamBullets
 
         return self.bulletCount < self.bulletLimit and \
-            self.timeSinceLastBullet > self.timeBetweenBullets
+            self.timeSinceLastBullet > self.timeBetweenBullets and \
+            self.ship.shipHealth > 0
 
     def shoot(self):
         if self.canShoot():

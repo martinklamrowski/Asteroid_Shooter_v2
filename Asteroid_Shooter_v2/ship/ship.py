@@ -23,7 +23,7 @@ class Ship(Sprite):
         rect (pygame.Rect): Bounding box of the ship.
         pos (Vec2d): Current position of the ship.
         shipHealth (int): Lives ship currently has left.
-        diretion (Vec2d): Normalized direction vector of the ship.
+        direction (Vec2d): Normalized direction vector of the ship.
         keyboardInput (bools): State of keyboard keys pressed from last frame.
         isInvincible (bool): Whether ship is invincible or not.
         invincibilityTimer (Timer): Timer for when to stop invincibility.
