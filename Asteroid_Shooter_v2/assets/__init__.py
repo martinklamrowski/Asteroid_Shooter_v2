@@ -30,7 +30,10 @@ bulletSpamImage = pygame.image.load(bulletSpamImageDir)
 
 wideBulletImageDir = 'Asteroid_Shooter_v2/assets/powerups/wide20.png'
 wideBulletImage = pygame.image.load(wideBulletImageDir)
-
+"""
+deflectorImageDir = 'Asteroid_Shooter_v2/assets/powerups/deflector.png'
+deflectorShieldImage = pygame.image.load(delflectorImageDir)
+"""
 # Music
 backgroundSoundDir = 'Asteroid_Shooter_v2/assets/music/background.ogg'
 bulletSoundDir = 'Asteroid_Shooter_v2/assets/music/bullet.ogg'

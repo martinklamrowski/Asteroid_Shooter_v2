@@ -14,6 +14,8 @@ framerate = 60
 # Ship config
 shipHealth = 3
 shipTranslationSpeed = 0.2
+shipAcceleration = 0.07
+shipDecelerationFactor = 0.97
 keyToTranslationVector = {
     pygame.K_j: Vec2d((-shipTranslationSpeed, 0)),  # Left
     pygame.K_l: Vec2d((shipTranslationSpeed, 0)),  # Right
@@ -36,7 +38,7 @@ timeCooldownStart = 700
 timeBetweenBulletCooldowns = 100
 
 # Bullet config
-bulletTranslationSpeed = 0.4
+bulletTranslationSpeed = 0.8
 
 
 # Asteroid config

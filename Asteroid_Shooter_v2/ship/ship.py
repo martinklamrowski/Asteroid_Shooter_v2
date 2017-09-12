@@ -4,7 +4,7 @@ from pygame.sprite import Sprite
 from ..assets import shipImage, transparentShipImage
 from ..utils.vec2d import Vec2d
 from ..utils.timer import Timer
-from ..config import keyToTranslationVector, keyToRotationAngle, shipHealth
+from ..config import keyToTranslationVector, keyToRotationAngle, shipHealth, shipAcceleration, shipDecelerationFactor
 from ..config import invincibilityDuration
 
 
@@ -40,6 +40,7 @@ class Ship(Sprite):
         self.currentImage = None
         self.rect = None
         self.pos = position
+        self.vel = Vec2d((0, 0))
         self.shipHealth = shipHealth
         self.direction = Vec2d((1, 0))  # Initially point ship right.
         self.keyboardInput = None
@@ -88,7 +89,10 @@ class Ship(Sprite):
         # Handle translation updates.
         for key, translationVector in keyToTranslationVector.items():
             if self.keyboardInput[key]:  # If key has been pressed.
-                self.pos += timePassed * translationVector
+                self.vel += timePassed * translationVector * shipAcceleration
+                
+        self.pos += self.vel
+        self.vel *= shipDecelerationFactor     
 
         # Handle rotation updates.
         for key, rotationAngle in keyToRotationAngle.items():
